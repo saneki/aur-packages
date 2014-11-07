@@ -1,0 +1,28 @@
+pkgname=disunity-git
+_pkgname=disunity
+pkgver=419.e8c4175
+pkgrel=1
+pkgdesc="An experimental toolset for Unity asset and asset bundle files."
+arch=("x86_64" "i686")
+url="https://github.com/ata4/disunity"
+license=("Unilicense")
+makedepends=(git maven)
+depends=(java-runtime)
+source=("git://github.com/ata4/${_pkgname}.git")
+sha256sums=("SKIP")
+
+pkgver() {
+  cd "${_pkgname}"
+  echo "$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${_pkgname}"
+  git submodule update --init --recursive
+  ./maven-setup-submodules.sh
+  mvn package
+}
+
+package() {
+  echo "Todo"
+}
